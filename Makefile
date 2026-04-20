@@ -1,10 +1,21 @@
 CC = gcc
-CFLAGS = -O2 -std=c11 -Wall -Wextra -pedantic
+CFLAGS = -O2 -std=c11 -Wall -Wextra -pedantic -march=native -lm
+TARGET = experimento
+SRC = experimento.c
+DATA = resultados.dat
+PNG = grafica.png
+PLOT = plot.gp
 
-all: experimento
+all: $(PNG)
 
-experimento: experimento.c
-	$(CC) $(CFLAGS) -o experimento experimento.c
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(DATA): $(TARGET)
+	./$(TARGET) > $(DATA)
+
+$(PNG): $(DATA) $(PLOT)
+	gnuplot $(PLOT)
 
 clean:
-	rm -f experimento
+	rm -f $(TARGET) $(DATA) $(PNG)
