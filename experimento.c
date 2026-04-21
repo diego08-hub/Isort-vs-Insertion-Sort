@@ -121,21 +121,30 @@ int main(void) {
 
   printf("# n insertion_us merge_us\n");
 
-  for(int n = 2; n <= 500; n += 2) {
-    int* baseArr = (int*)malloc(n * sizeof(int));
-    if(baseArr == NULL) {
-      fprintf(stderr, "Error: no se pudo reservar memoria para n=%d\n", n);
+  for(int n = 2; n <= 1000; n += 2) {
+    int* baseArr = malloc(n * sizeof(int));
+    int* copy1   = malloc(n * sizeof(int));
+    int* copy2   = malloc(n * sizeof(int));
+
+    if(baseArr == NULL || copy1 == NULL || copy2 == NULL) {
+      fprintf(stderr, "Error de memoria para n=%d\n", n);
       return EXIT_FAILURE;
     }
 
     generateRandomArray(baseArr, n, 100000);
-    double insertionTime = measureInsertionSort(baseArr, n);
-    double mergeTime = measureMergeSort(baseArr, n);
+
+    memcpy(copy1, baseArr, n * sizeof(int));
+    memcpy(copy2, baseArr, n * sizeof(int));
+
+    double insertionTime = measureInsertionSort(copy1, n);
+    double mergeTime     = measureMergeSort(copy2, n);
 
     printf("%d %.3f %.3f\n", n, insertionTime, mergeTime);
+
     free(baseArr);
+    free(copy1);
+    free(copy2);
   }
 
   return EXIT_SUCCESS;
 }
-
