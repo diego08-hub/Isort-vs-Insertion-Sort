@@ -120,6 +120,7 @@ int main(void) {
   srand((unsigned int)time(NULL));
 
   printf("# n insertion_us merge_us\n");
+  int rep = 10; // repeticiones para promedio
 
   for(int n = 2; n <= 1000; n += 2) {
     int* baseArr = malloc(n * sizeof(int));
@@ -133,11 +134,21 @@ int main(void) {
 
     generateRandomArray(baseArr, n, 100000);
 
+    double totalInsertion = 0.0;
+    double totalMerge     = 0.0;
+
+    for(int r = 0; r < rep; r++) {
+
     memcpy(copy1, baseArr, n * sizeof(int));
     memcpy(copy2, baseArr, n * sizeof(int));
 
-    double insertionTime = measureInsertionSort(copy1, n);
-    double mergeTime     = measureMergeSort(copy2, n);
+    totalInsertion += measureInsertionSort(copy1, n);
+    totalMerge     += measureMergeSort(copy2, n);
+
+    }
+
+    double insertionTime = totalInsertion / rep;
+    double mergeTime     = totalMerge / rep;
 
     printf("%d %.3f %.3f\n", n, insertionTime, mergeTime);
 
