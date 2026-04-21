@@ -121,7 +121,7 @@ int main(void) {
 
   printf("# n insertion_us merge_us\n");
 
-  for(int n = 2; n <= 40; n += 2) {
+  for(int n = 2; n <= 500; n += 2) {
     int* baseArr = (int*)malloc(n * sizeof(int));
     if(baseArr == NULL) {
       fprintf(stderr, "Error: no se pudo reservar memoria para n=%d\n", n);
