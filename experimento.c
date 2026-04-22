@@ -122,7 +122,7 @@ int main(void) {
   printf("# n insertion_us merge_us\n");
   int rep = 10; // repeticiones para promedio
 
-  for(int n = 2; n <= 1000; n += 2) {
+  for(int n = 2; n <= 1200; n *= 2) {
     int* baseArr = malloc(n * sizeof(int));
     int* copy1   = malloc(n * sizeof(int));
     int* copy2   = malloc(n * sizeof(int));
